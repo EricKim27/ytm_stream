@@ -17,7 +17,6 @@ def play_audio(url: str):
         audio_url = info['url']
         title = info['title']
         duration = str(datetime.timedelta(seconds=int(info['duration'])))
-        print(f"{title}")
         ffmpeg_cmd = [
             'ffplay',
             '-i', audio_url,  # Input is the audio URL
@@ -36,8 +35,9 @@ def play_audio(url: str):
 
         while process.poll() is None:
             elapsed = time.time() - start_time
-            print(f"\r{str(datetime.timedelta(seconds=int(elapsed)))} | {duration}", end="")
+            print(f"\r{title}\n{str(datetime.timedelta(seconds=int(elapsed)))} | {duration}", end="")
             time.sleep(1)
+            print("\033[F", end="")
 
         
 

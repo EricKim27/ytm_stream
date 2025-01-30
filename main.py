@@ -1,7 +1,10 @@
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import audio
 import sys
 import os
-
 def get_plist_urls():
     plist_l = []
     with open(f"{os.path.dirname(__file__)}/plists.txt", "r") as f:
@@ -15,10 +18,14 @@ def get_plist_urls():
 
 def main():
     try:
-        plist = get_plist_urls()
-        for i in range(len(plist)):
-            p = audio.playlist(plist[i])
-            p.play_items()
+        if len(sys.argv) > 1:
+            music_name = " ".join(sys.argv[1:])
+            v_id = audio.search(music_name) 
+        else:
+            plist = get_plist_urls()
+            for i in range(len(plist)):
+                p = audio.playlist(plist[i])
+                p.play_items()
     except KeyboardInterrupt:
         print("Interrupted")
     except Exception as e:

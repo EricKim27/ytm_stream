@@ -1,8 +1,9 @@
 import yt_dlp
 import subprocess
-from pytubefix import Playlist, YouTube
+from pytubefix import Playlist, YouTube, Search
 import time
 import datetime
+
 ydl_option = {
     'format': 'bestaudio/best',
     'quiet': True,
@@ -39,7 +40,10 @@ def play_audio(url: str):
             time.sleep(1)
             print("\033[F", end="")
 
-        
+def search(name: str) -> str:
+    s = Search(name)
+    url = s.results[0].watch_url
+    play_audio(url)
 
 class playlist:
     def __init__(self, url:str):
